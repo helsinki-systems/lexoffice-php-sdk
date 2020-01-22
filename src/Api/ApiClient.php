@@ -27,7 +27,7 @@ class ApiClient implements ApiClientInterface
      */
     public function __construct(
         string $apiKey,
-        string $endpoint = 'https://api.lexoffice.io'
+        string $endpoint = 'https://api.lexoffice.io/v1/'
     ) {
         $this->client = new Client();
         $this->endpoint = $endpoint;
@@ -35,15 +35,47 @@ class ApiClient implements ApiClientInterface
     }
 
     /**
+     * @param string $uri
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function get(string $uri): \Psr\Http\Message\ResponseInterface
+    {
+        $options = $this->getDefaultOptions();
+        return $this->client->get($this->endpoint . $uri, $options);
+    }
+
+    /**
+     * @param string $uri
      * @param string $body
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function post(string $body): \Psr\Http\Message\ResponseInterface
+    public function post(string $uri, string $body): \Psr\Http\Message\ResponseInterface
     {
         $options = $this->getDefaultOptions();
         $options['body'] = $body;
+        return $this->client->post($this->endpoint . $uri, $options);
+    }
 
-        return $this->client->post($this->endpoint, $options);
+    /**
+     * @param string $uri
+     * @param string $body
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function put(string $uri, string $body): \Psr\Http\Message\ResponseInterface
+    {
+        $options = $this->getDefaultOptions();
+        $options['body'] = $body;
+        return $this->client->put($this->endpoint . $uri, $options);
+    }
+
+    /**
+     * @param string $uri
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function delete(string $uri): \Psr\Http\Message\ResponseInterface
+    {
+        $options = $this->getDefaultOptions();
+        return $this->client->delete($this->endpoint . $uri, $options);
     }
 
     /**
@@ -52,10 +84,8 @@ class ApiClient implements ApiClientInterface
     private function getDefaultOptions(): array
     {
         return [
-            'auth' => [
-                $this->apiKey,
-            ],
             'headers' => [
+                'Authorization' => 'Bearer ' . $this->apiKey,
                 'Content-Type' => 'application/json',
             ],
             'body' => '',
