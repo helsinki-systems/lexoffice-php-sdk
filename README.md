@@ -8,7 +8,7 @@ This SDK is currently not finished
 
 ### Install  the SDK into your Project
 
-The SDK requires a PHP version of 7.1 or higher and ext-xml. The recommended way to install the SDK is through [Composer](http://getcomposer.org).
+The SDK requires a PHP version of 7.4 or higher. The recommended way to install the SDK is through [Composer](http://getcomposer.org).
 
 ```bash
 composer require ...
