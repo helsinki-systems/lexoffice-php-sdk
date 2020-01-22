@@ -1,23 +1,28 @@
 <?php declare (strict_types = 1);
 
-namespace LexofficeSdk\Profile;
+namespace LexofficeSdk\Contact;
 
-class CreatedEntity
+class AddressEntity
 {
-    public $userName;
-    public $userEmail;
-    public $date;
+
+    public $supplement;
+    public $street;
+    public $zip;
+    public $city;
+    public $countryCode;
 
     public function __construct($data = null)
     {
         if ($data) {
             $this->setData($data);
+        } else {
+            $this->countryCode = "DE";
         }
     }
 
     /**
      * @param $data
-     * @return CreatedEntity
+     * @return AddressEntity
      */
     public function setData($data): self
     {
@@ -27,7 +32,7 @@ class CreatedEntity
                 continue;
             }
 
-            $this->{$key} = (string) $value;
+            $this->{$key} = $value;
 
         }
         return $this;

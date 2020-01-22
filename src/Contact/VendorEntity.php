@@ -1,12 +1,9 @@
-<?php declare (strict_types = 1);
+<?php
+namespace LexofficeSdk\Contact;
 
-namespace LexofficeSdk\Profile;
-
-class CreatedEntity
+class VendorEntity
 {
-    public $userName;
-    public $userEmail;
-    public $date;
+    public $number;
 
     public function __construct($data = null)
     {
@@ -17,7 +14,7 @@ class CreatedEntity
 
     /**
      * @param $data
-     * @return CreatedEntity
+     * @return VendorEntity
      */
     public function setData($data): self
     {
@@ -27,8 +24,7 @@ class CreatedEntity
                 continue;
             }
 
-            $this->{$key} = (string) $value;
-
+            $this->{$key} = $value;
         }
         return $this;
     }

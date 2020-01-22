@@ -1,12 +1,28 @@
 <?php declare (strict_types = 1);
 
-namespace LexofficeSdk\Profile;
+namespace LexofficeSdk\Contact;
 
-class CreatedEntity
+class EmailAddressesEntity
 {
-    public $userName;
-    public $userEmail;
-    public $date;
+    /**
+     * @var array
+     */
+    public $business = array();
+
+    /**
+     * @var array
+     */
+    public $office = array();
+
+    /**
+     * @var array
+     */
+    public $private = array();
+
+    /**
+     * @var array
+     */
+    public $other = array();
 
     public function __construct($data = null)
     {
@@ -17,7 +33,7 @@ class CreatedEntity
 
     /**
      * @param $data
-     * @return CreatedEntity
+     * @return EmailAddressesEntity
      */
     public function setData($data): self
     {
@@ -27,9 +43,12 @@ class CreatedEntity
                 continue;
             }
 
-            $this->{$key} = (string) $value;
+            foreach ($value as $emailAddress) {
+                array_push($this->{$key}, $emailAddress);
+            }
 
         }
         return $this;
     }
+
 }

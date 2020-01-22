@@ -2,17 +2,17 @@
 
 namespace LexofficeSdk\Profile;
 
-use LexofficeSdk\Api\ApiClient;
+use LexofficeSdk\Api\ApiClientInterface;
 use LexofficeSdk\Profile\ProfileEntity;
 
 class ProfileService
 {
     /**
-     * @var ApiClient
+     * @var ApiClientInterface
      */
     private $apiClient;
 
-    public function __construct(ApiClient $apiClient)
+    public function __construct(ApiClientInterface $apiClient)
     {
         $this->apiClient = $apiClient;
     }
@@ -22,4 +22,5 @@ class ProfileService
         $response = json_decode($this->apiClient->get('profile')->getBody()->getContents());
         return new ProfileEntity($response);
     }
+
 }

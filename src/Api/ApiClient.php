@@ -38,9 +38,10 @@ class ApiClient implements ApiClientInterface
      * @param string $uri
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function get(string $uri): \Psr\Http\Message\ResponseInterface
+    public function get(string $uri, array $query = null): \Psr\Http\Message\ResponseInterface
     {
         $options = $this->getDefaultOptions();
+        $options['query'] = $query;
         return $this->client->get($this->endpoint . $uri, $options);
     }
 

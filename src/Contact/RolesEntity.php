@@ -1,36 +1,33 @@
-<?php declare (strict_types = 1);
+<?php
+namespace LexofficeSdk\Contact;
 
-namespace LexofficeSdk\Profile;
+use LexofficeSdk\Contact\CustomerEntity;
+use LexofficeSdk\Contact\VendorEntity;
 
-use LexofficeSdk\Profile\CreatedEntity;
-
-class ProfileEntity
+class RolesEntity
 {
-    public $organizationId;
-
-    public $companyName;
+    /**
+     * @var CustomerEntity
+     */
+    public $customer;
 
     /**
-     * @var CreatedEntity
+     * @var VendorEntity
      */
-    public $created;
-
-    public $connectionId;
-
-    public $taxType;
-
-    public $smallBusiness;
+    public $vendor;
 
     public function __construct($data = null)
     {
         if ($data) {
             $this->setData($data);
+        } else {
+            $this->customer = new CustomerEntity();
         }
     }
 
     /**
      * @param $data
-     * @return ProfileEntity
+     * @return ContactEntity
      */
     public function setData($data): self
     {
@@ -41,11 +38,11 @@ class ProfileEntity
             }
 
             switch ($key) {
-                case 'created':
-                    $this->{$key} = new CreatedEntity($value);
+                case 'customer':
+                    $this->{$key} = new CustomerEntity($value);
                     break;
-                default:
-                    $this->{$key} = (string) $value;
+                case 'vendor':
+                    $this->{$key} = new VendorEntity($value);
                     break;
             }
         }

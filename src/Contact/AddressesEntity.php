@@ -1,25 +1,20 @@
 <?php declare (strict_types = 1);
 
-namespace LexofficeSdk\Profile;
+namespace LexofficeSdk\Contact;
 
-use LexofficeSdk\Profile\CreatedEntity;
+use LexofficeSdk\Contact\AddressEntity;
 
-class ProfileEntity
+class AddressesEntity
 {
-    public $organizationId;
-
-    public $companyName;
+    /**
+     * @var AddressEntity[]
+     */
+    public $billing = array();
 
     /**
-     * @var CreatedEntity
+     * @var AddressEntity[]
      */
-    public $created;
-
-    public $connectionId;
-
-    public $taxType;
-
-    public $smallBusiness;
+    public $shipping = array();
 
     public function __construct($data = null)
     {
@@ -30,7 +25,7 @@ class ProfileEntity
 
     /**
      * @param $data
-     * @return ProfileEntity
+     * @return AddressesEntity
      */
     public function setData($data): self
     {
@@ -41,13 +36,16 @@ class ProfileEntity
             }
 
             switch ($key) {
-                case 'created':
-                    $this->{$key} = new CreatedEntity($value);
+                case 'shipping':
+                case 'billing':
+                    foreach ($value as $address) {
+                        array_push($this->{$key}, new AddressEntity($address));
+                    }
                     break;
                 default:
-                    $this->{$key} = (string) $value;
                     break;
             }
+
         }
         return $this;
     }
