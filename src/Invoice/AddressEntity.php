@@ -1,20 +1,16 @@
 <?php declare (strict_types = 1);
 
-namespace LexofficeSdk\Contact;
+namespace LexofficeSdk\Invoice;
 
 use LexofficeSdk\Abstracts\EntityAbstract;
 
 class AddressEntity extends EntityAbstract
 {
-
+    public $contactId;
+    public $name;
     public $supplement;
     public $street;
-    public $zip;
     public $city;
+    public $zip;
     public $countryCode;
-
-    public function setDefaultData(): void
-    {
-        $this->countryCode = "DE";
-    }
 }

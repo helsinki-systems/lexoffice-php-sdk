@@ -1,6 +1,6 @@
 <?php declare (strict_types = 1);
 
-namespace LexofficeSdk\Api;
+namespace LexofficeSdk\Interfaces;
 
 interface ApiClientInterface
 {

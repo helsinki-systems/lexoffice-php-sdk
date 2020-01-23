@@ -3,24 +3,28 @@
 namespace LexofficeSdk\Profile;
 
 use LexofficeSdk\Api\ApiClientInterface;
-use LexofficeSdk\Profile\ProfileEntity;
+use LexofficeSdk\Api\LexofficeException;
 
-class ProfileService
+class ProfileService extends ServiceAbstract
 {
-    /**
-     * @var ApiClientInterface
-     */
-    private $apiClient;
 
     public function __construct(ApiClientInterface $apiClient)
     {
-        $this->apiClient = $apiClient;
+        parent::__construct($apiClient, "profile/", Profile::class);
     }
 
-    public function getProfile(): ProfileEntity
+    public function getList(array $query = ['page' => 0, 'size' => 25]): array
     {
-        $response = json_decode($this->apiClient->get('profile')->getBody()->getContents());
-        return new ProfileEntity($response);
+        throw new LexofficeException('currently no getList endpoint for profile available');
     }
 
+    public function create(EntityInterface $entity): Object
+    {
+        throw new LexofficeException('currently no create endpoint for profile available');
+    }
+
+    public function update(EntityInterface $entity): Object
+    {
+        throw new LexofficeException('currently no create endpoint for profile available');
+    }
 }

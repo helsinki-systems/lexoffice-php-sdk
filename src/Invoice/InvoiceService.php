@@ -1,16 +1,16 @@
 <?php declare (strict_types = 1);
 
-namespace LexofficeSdk\Contact;
+namespace LexofficeSdk\Invoice;
 
 use LexofficeSdk\Abstracts\ServiceAbstract;
-use LexofficeSdk\Contact\Contact;
 use LexofficeSdk\Interfaces\ApiClientInterface;
+use LexofficeSdk\Invoice\Invoice;
 
-class ContactService extends ServiceAbstract
+class InvoiceService extends ServiceAbstract
 {
 
     public function __construct(ApiClientInterface $apiClient)
     {
-        parent::__construct($apiClient, "contacts/", Contact::class);
+        parent::__construct($apiClient, "invoices/", Invoice::class);
     }
 }

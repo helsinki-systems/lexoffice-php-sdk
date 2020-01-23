@@ -1,10 +1,11 @@
 <?php
 namespace LexofficeSdk\Contact;
 
+use LexofficeSdk\Abstracts\EntityAbstract;
 use LexofficeSdk\Contact\CustomerEntity;
 use LexofficeSdk\Contact\VendorEntity;
 
-class RolesEntity
+class RolesEntity extends EntityAbstract
 {
     /**
      * @var CustomerEntity
@@ -16,36 +17,8 @@ class RolesEntity
      */
     public $vendor;
 
-    public function __construct($data = null)
+    public function setDefaultData(): void
     {
-        if ($data) {
-            $this->setData($data);
-        } else {
-            $this->customer = new CustomerEntity();
-        }
-    }
-
-    /**
-     * @param $data
-     * @return ContactEntity
-     */
-    public function setData($data): self
-    {
-        foreach ($data as $key => $value) {
-            if (!property_exists($this, $key)) {
-                trigger_error('the property ' . $key . ' does not exist in' . self::class);
-                continue;
-            }
-
-            switch ($key) {
-                case 'customer':
-                    $this->{$key} = new CustomerEntity($value);
-                    break;
-                case 'vendor':
-                    $this->{$key} = new VendorEntity($value);
-                    break;
-            }
-        }
-        return $this;
+        $this->customer = new CustomerEntity();
     }
 }

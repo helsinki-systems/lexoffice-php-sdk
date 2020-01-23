@@ -2,7 +2,9 @@
 
 namespace LexofficeSdk\Contact;
 
-class PhoneNumbersEntity
+use LexofficeSdk\Abstracts\EntityAbstract;
+
+class PhoneNumbersEntity extends EntityAbstract
 {
     /**
      * @var array
@@ -34,31 +36,7 @@ class PhoneNumbersEntity
      */
     public $other = array();
 
-    public function __construct($data = null)
-    {
-        if ($data) {
-            $this->setData($data);
-        }
-    }
-
-    /**
-     * @param $data
-     * @return PhoneNumbersEntity
-     */
-    public function setData($data): self
-    {
-        foreach ($data as $key => $value) {
-            if (!property_exists($this, $key)) {
-                trigger_error('the property ' . $key . ' does not exist in' . self::class);
-                continue;
-            }
-
-            foreach ($value as $phoneNumber) {
-                array_push($this->{$key}, $phoneNumber);
-            }
-
-        }
-        return $this;
-    }
-
+    protected $valueList = [
+        'business', 'office', 'mobile', 'private', 'fax', 'other',
+    ];
 }

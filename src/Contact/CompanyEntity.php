@@ -2,9 +2,10 @@
 
 namespace LexofficeSdk\Contact;
 
+use LexofficeSdk\Abstracts\EntityAbstract;
 use LexofficeSdk\Contact\CompanyContactPersonEntity;
 
-class CompanyEntity
+class CompanyEntity extends EntityAbstract
 {
     public $allowTaxFreeInvoices;
     public $name;
@@ -16,38 +17,12 @@ class CompanyEntity
      */
     public $contactPersons = array();
 
-    public function __construct($data = null)
-    {
-        if ($data) {
-            $this->setData($data);
-        } else {
-            array_push($this->contactPersons, new CompanyContactPersonEntity());
-        }
-    }
+    protected $relationsList = [
+        'contactPersons' => CompanyContactPersonEntity::class,
+    ];
 
-    /**
-     * @param $data
-     * @return CompanyEntity
-     */
-    public function setData($data): self
+    public function setDefaultData(): void
     {
-        foreach ($data as $key => $value) {
-            if (!property_exists($this, $key)) {
-                trigger_error('the property ' . $key . ' does not exist in' . self::class);
-                continue;
-            }
-
-            switch ($key) {
-                case 'contactPersons':
-                    foreach ($value as $contact) {
-                        array_push($this->{$key}, new CompanyContactPersonEntity($contact));
-                    }
-                    break;
-                default:
-                    $this->{$key} = $value;
-                    break;
-            }
-        }
-        return $this;
+        array_push($this->contactPersons, new CompanyContactPersonEntity());
     }
 }
