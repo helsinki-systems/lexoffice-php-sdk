@@ -34,9 +34,9 @@ abstract class ServiceAbstract
 
     /**
      * @var query
-     * @return array
+     * @return Object
      */
-    public function getList(array $query = ['page' => 0, 'size' => 25]): array
+    public function getList(array $query = ['page' => 0, 'size' => 25]): Object
     {
         $response = json_decode($this->apiClient->get($this->endpoint, $query)->getBody()->getContents());
 
