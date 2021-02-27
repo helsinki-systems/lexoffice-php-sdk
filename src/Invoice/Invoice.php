@@ -25,6 +25,7 @@ class Invoice extends EntityAbstract
     public $voucherNumber;
     public $voucherDate;
     public $dueDate;
+    public $closingInvoice;
 
     /**
      * @var AddressEntity

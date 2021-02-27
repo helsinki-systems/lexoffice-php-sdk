@@ -8,12 +8,13 @@ use LexofficeSdk\Invoice\PaymentDiscountConditionEntity;
 class PaymentConditionEntity extends EntityAbstract
 {
     public $paymentTermLabel;
+    public $paymentTermLabelTemplate;
     public $paymentTermDuration;
 
     /**
      * @var PaymentDiscountConditionEntity[]
      */
-    public $paymentDiscountConditions = array();
+    public $paymentDiscountConditions = null;
 
     protected $relationList = [
         'paymentDiscountConditions' => PaymentDiscountConditionEntity::class,

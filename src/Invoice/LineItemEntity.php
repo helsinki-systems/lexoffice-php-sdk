@@ -20,7 +20,7 @@ class LineItemEntity extends EntityAbstract
     public $discountPercentage;
     public $lineItemAmount;
 
-    public $relations = [
+    protected $relations = [
         'unitPrice' => UnitPriceEntity::class,
     ];
 }

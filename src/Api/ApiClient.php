@@ -4,6 +4,9 @@ namespace LexofficeSdk\Api;
 
 use Exception;
 use GuzzleHttp\Client;
+
+use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\RequestOptions;
 use LexofficeSdk\Api\LexofficeException;
 use LexofficeSdk\Interfaces\ApiClientInterface;
 
@@ -32,7 +35,19 @@ class ApiClient implements ApiClientInterface
         string $apiKey,
         string $endpoint = 'https://api.lexoffice.io/v1/'
     ) {
-        $this->client = new Client();
+        $this->client = new Client(
+            [
+            // Base URI is used with relative requests
+            'base_uri' => $endpoint,
+            // You can set any number of default request options.
+            'timeout'  => 2.0,
+            'headers' => [
+                'Authorization' => 'Bearer '.$apiKey,
+                'Accept'     => 'application/json',
+                'content-type' => 'application/json'
+            ]
+            
+        ]);
         $this->endpoint = $endpoint;
         $this->apiKey = $apiKey;
     }
@@ -44,9 +59,7 @@ class ApiClient implements ApiClientInterface
     public function get(string $uri, array $query = null): \Psr\Http\Message\ResponseInterface
     {
         try {
-            $options = $this->getDefaultOptions();
-            $options['query'] = $query;
-            return $this->client->get($this->endpoint . $uri, $options);
+            return $this->client->get($uri);
         } catch (Exception $e) {
             throw new LexofficeException($e->getMessage());
         }
@@ -60,11 +73,11 @@ class ApiClient implements ApiClientInterface
     public function post(string $uri, string $body): \Psr\Http\Message\ResponseInterface
     {
         try {
-            $options = $this->getDefaultOptions();
-            $options['body'] = $body;
-            return $this->client->post($this->endpoint . $uri, $options);
-        } catch (Exception $e) {
-            throw new LexofficeException($e->getMessage());
+            return $this->client->post($uri, ['body' => $body]);
+        } catch (BadResponseException $e) {
+            $response = $e->getResponse();
+            $responseBodyAsString = $response->getBody()->getContents();
+            throw new LexofficeException($responseBodyAsString);
         }
     }
 
@@ -76,9 +89,7 @@ class ApiClient implements ApiClientInterface
     public function put(string $uri, string $body): \Psr\Http\Message\ResponseInterface
     {
         try {
-            $options = $this->getDefaultOptions();
-            $options['body'] = $body;
-            return $this->client->put($this->endpoint . $uri, $options);
+            return $this->client->put($uri, ['body' => $body]);
         } catch (Exception $e) {
             throw new LexofficeException($e->getMessage());
         }
@@ -91,24 +102,10 @@ class ApiClient implements ApiClientInterface
     public function delete(string $uri): \Psr\Http\Message\ResponseInterface
     {
         try {
-            $options = $this->getDefaultOptions();
-            return $this->client->delete($this->endpoint . $uri, $options);
+            return $this->client->delete($uri);
         } catch (Exception $e) {
             throw new LexofficeException($e->getMessage());
         }
     }
 
-    /**
-     * @return array
-     */
-    private function getDefaultOptions(): array
-    {
-        return [
-            'headers' => [
-                'Authorization' => 'Bearer ' . $this->apiKey,
-                'Content-Type' => 'application/json',
-            ],
-            'body' => '',
-        ];
-    }
 }

@@ -25,7 +25,7 @@ abstract class EntityAbstract implements EntityInterface
     {
         foreach ($data as $key => $value) {
             if (!property_exists($this, $key)) {
-                trigger_error('the property ' . $key . ' does not exist in' . self::class);
+                trigger_error('the property ' . $key . ' does not exist in' . static::class);
                 continue;
             }
 
