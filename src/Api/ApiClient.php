@@ -59,9 +59,10 @@ class ApiClient implements ApiClientInterface
     public function get(string $uri, array $query = null): \Psr\Http\Message\ResponseInterface
     {
         try {
-            return $this->client->get($uri);
+            $response = $this->client->get($uri,  ['query' => $query]);
+            return $response;
         } catch (Exception $e) {
-            throw new LexofficeException($e->getMessage());
+            throw new LexofficeException($e->getResponse()->getBody()->getContents());
         }
     }
 

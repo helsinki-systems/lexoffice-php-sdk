@@ -24,9 +24,13 @@ abstract class EntityAbstract implements EntityInterface
     public function setData($data): EntityInterface
     {
         foreach ($data as $key => $value) {
-            if (!property_exists($this, $key)) {
-                trigger_error('the property ' . $key . ' does not exist in' . static::class);
-                continue;
+            try{
+                if (!property_exists($this, $key)) {
+                    trigger_error('the property ' . $key . ' does not exist in' . static::class);
+                    continue;
+                }
+            }catch (\TypeError $e){
+                #trigger_error('the property ' . $key . ' is not of type String in' . static::class);
             }
 
             if (array_key_exists($key, $this->relations)) {
