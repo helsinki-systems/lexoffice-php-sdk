@@ -1,12 +1,12 @@
 {
-    "name": "eike-grundke/lexoffice-php-sdk",
+    "name": "helsinki-systems/lexoffice-php-sdk",
     "description": "Lexoffice SDK for PHP",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "eike-grundke",
-            "email": "grundke.eike@gmail.com"
+            "name": "helsinki-systems",
+            "email": "info@helsinki-systems.de"
         }
     ],
     "minimum-stability": "dev",
