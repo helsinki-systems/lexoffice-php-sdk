@@ -50,11 +50,13 @@ abstract class ServiceAbstract
 
     /**
      * @var EntityInterface
+     * @var bool
      * @return Object
      */
-    public function create(EntityInterface $entity): Object
+    public function create(EntityInterface $entity, bool $finalize=false): Object
     {
-        $response = $this->apiClient->post($this->endpoint, json_encode($entity));
+        $finalizeParameter = $finalize ? '?finalize=true' : '';
+        $response = $this->apiClient->post($this->endpoint . $finalizeParameter, json_encode($entity));
         return json_decode($response->getBody()->getContents());
     }
 
