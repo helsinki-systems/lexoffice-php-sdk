@@ -40,13 +40,12 @@ class ApiClient implements ApiClientInterface
             // Base URI is used with relative requests
             'base_uri' => $endpoint,
             // You can set any number of default request options.
-            'timeout'  => 2.0,
+            'timeout'  => 5.0,
             'headers' => [
                 'Authorization' => 'Bearer '.$apiKey,
                 'Accept'     => 'application/json',
                 'content-type' => 'application/json'
             ]
-            
         ]);
         $this->endpoint = $endpoint;
         $this->apiKey = $apiKey;
