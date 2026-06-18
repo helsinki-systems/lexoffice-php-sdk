@@ -1,4 +1,6 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace LexofficeSdk\Invoice;
 
@@ -9,7 +11,7 @@ use LexofficeSdk\Invoice\LineItemEntity;
 use LexofficeSdk\Invoice\PaymentConditionEntity;
 use LexofficeSdk\Invoice\ShippingConditionEntity;
 use LexofficeSdk\Invoice\TaxAmountEntity;
-use LexofficeSdk\Invoice\TaxContitionEntity;
+use LexofficeSdk\Invoice\TaxConditionEntity;
 use LexofficeSdk\Invoice\TotalPriceEntity;
 
 class Invoice extends EntityAbstract
@@ -26,6 +28,8 @@ class Invoice extends EntityAbstract
     public $voucherDate;
     public $dueDate;
     public $closingInvoice;
+    public $electronicDocumentProfile;
+    public $relatedVouchers;
 
     /**
      * @var AddressEntity
@@ -48,7 +52,7 @@ class Invoice extends EntityAbstract
     public $taxAmounts = array();
 
     /**
-     * @var TaxContitionEntity
+     * @var TaxConditionEntity
      */
     public $taxConditions;
 
@@ -74,7 +78,7 @@ class Invoice extends EntityAbstract
     protected $relations = [
         'address' => AddressEntity::class,
         'totalPrice' => TotalPriceEntity::class,
-        'taxConditions' => TaxContitionEntity::class,
+        'taxConditions' => TaxConditionEntity::class,
         'paymentConditions' => PaymentConditionEntity::class,
         'shippingConditions' => ShippingConditionEntity::class,
         'files' => FilesEntity::class,

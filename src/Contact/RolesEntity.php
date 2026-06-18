@@ -1,4 +1,5 @@
 <?php
+
 namespace LexofficeSdk\Contact;
 
 use LexofficeSdk\Abstracts\EntityAbstract;
@@ -16,6 +17,11 @@ class RolesEntity extends EntityAbstract
      * @var VendorEntity
      */
     public $vendor;
+
+    protected $relations = [
+        'customer' => CustomerEntity::class,
+        'vendor' => VendorEntity::class,
+    ];
 
     public function setDefaultData(): void
     {

@@ -1,4 +1,6 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace LexofficeSdk\Invoice;
 
@@ -16,7 +18,7 @@ class PaymentConditionEntity extends EntityAbstract
      */
     public $paymentDiscountConditions = null;
 
-    protected $relationList = [
+    protected $relationsList = [
         'paymentDiscountConditions' => PaymentDiscountConditionEntity::class,
     ];
 }
