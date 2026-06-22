@@ -4,7 +4,7 @@ namespace LexofficeSdk\Invoice;
 
 use LexofficeSdk\Abstracts\EntityAbstract;
 
-class TaxContitionEntity extends EntityAbstract
+class TaxConditionEntity extends EntityAbstract
 {
     const NET = 'net';
     const GROSS = 'gross';

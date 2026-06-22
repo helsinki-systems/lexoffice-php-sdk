@@ -18,4 +18,12 @@ class Profile extends EntityAbstract
     public $taxType;
     public $smallBusiness;
 
+    protected $relations = [
+        'created' => CreatedEntity::class,
+    ];
+
+    public function setDefaultData(): void
+    {
+        $this->created = new CreatedEntity();
+    }
 }

@@ -1,4 +1,6 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace LexofficeSdk\Abstracts;
 
@@ -18,8 +20,8 @@ abstract class ServiceAbstract
     public function __construct(ApiClientInterface $apiClient, string $endpoint, string $class)
     {
         $this->apiClient = $apiClient;
-        $this->endpoint = $endpoint;
-        $this->class = $class;
+        $this->endpoint  = $endpoint;
+        $this->class     = $class;
     }
 
     /**
@@ -36,16 +38,25 @@ abstract class ServiceAbstract
      * @var query
      * @return array
      */
-    public function getList(array $query = ['page' => 0, 'size' => 25]): array
+    public function getList(array $query = []): array
     {
-        $response = json_decode($this->apiClient->get($this->endpoint, $query)->getBody()->getContents());
+        $autoPaginate = ! isset($query['page']);
+        $items        = [];
+        $page         = 0;
 
-        $contacts = array();
-        foreach ($response->content as $contact) {
-            array_push($contacts, new $this->class($contact));
-        }
+        do {
+            if ($autoPaginate) {
+                $query['page'] = $page;
+            }
 
-        return $contacts;
+            $response = json_decode($this->apiClient->get($this->endpoint, $query)->getBody()->getContents());
+
+            foreach ($response->content as $item) {
+                $items[] = new $this->class($item);
+            }
+        } while ($autoPaginate && ++$page < $response->totalPages);
+
+        return $items;
     }
 
     /**
@@ -53,10 +64,10 @@ abstract class ServiceAbstract
      * @var bool
      * @return Object
      */
-    public function create(EntityInterface $entity, bool $finalize=false): Object
+    public function create(EntityInterface $entity, bool $finalize = false): Object
     {
         $finalizeParameter = $finalize ? '?finalize=true' : '';
-        $response = $this->apiClient->post($this->endpoint . $finalizeParameter, json_encode($entity));
+        $response          = $this->apiClient->post($this->endpoint . $finalizeParameter, json_encode($entity));
         return json_decode($response->getBody()->getContents());
     }
 
@@ -66,7 +77,7 @@ abstract class ServiceAbstract
      */
     public function update(EntityInterface $entity): Object
     {
-        $response = $this->apiClient->put($this->endpoint . $contact->id, json_encode($entity));
+        $response = $this->apiClient->put($this->endpoint . $entity->id, json_encode($entity));
         return json_decode($response->getBody()->getContents());
     }
 }

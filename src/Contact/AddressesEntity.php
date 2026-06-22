@@ -17,7 +17,7 @@ class AddressesEntity extends EntityAbstract
      */
     public $shipping = array();
 
-    protected $relations = [
+    protected $relationsList = [
         'billing' => AddressEntity::class,
         'shipping' => AddressEntity::class,
     ];

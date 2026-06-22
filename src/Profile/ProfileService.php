@@ -2,8 +2,10 @@
 
 namespace LexofficeSdk\Profile;
 
-use LexofficeSdk\Api\ApiClientInterface;
+use LexofficeSdk\Abstracts\ServiceAbstract;
 use LexofficeSdk\Api\LexofficeException;
+use LexofficeSdk\Interfaces\ApiClientInterface;
+use LexofficeSdk\Interfaces\EntityInterface;
 
 class ProfileService extends ServiceAbstract
 {
@@ -18,13 +20,13 @@ class ProfileService extends ServiceAbstract
         throw new LexofficeException('currently no getList endpoint for profile available');
     }
 
-    public function create(EntityInterface $entity): Object
+    public function create(EntityInterface $entity, bool $finalize = false): Object
     {
         throw new LexofficeException('currently no create endpoint for profile available');
     }
 
     public function update(EntityInterface $entity): Object
     {
-        throw new LexofficeException('currently no create endpoint for profile available');
+        throw new LexofficeException('currently no update endpoint for profile available');
     }
 }
